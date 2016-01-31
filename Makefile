@@ -1,6 +1,6 @@
 # Set compiler args
-CC=g++
-CFLAGS=-Wall --vectorize --cpu=Cortex-A9 -O3 -Otime -c
+CC=armcc
+CFLAGS=-Wall -mfpu=neon -ftree-vectorize -c
 LDFLAGS=
 LDLIBS=-L /usr/lib $$(pkg-config --cflags --libs opencv) -pthread
 ifeq ($(shell arch), armv7l)
