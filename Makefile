@@ -1,6 +1,6 @@
 # Set compiler args
 CC=g++
-CFLAGS=-Wall -c
+CFLAGS=-Wall -c --vectorize --cpu=Cortex-A9 -O3 -Otime
 LDFLAGS=
 LDLIBS=-L /usr/lib $$(pkg-config --cflags --libs opencv) -pthread
 ifeq ($(shell arch), armv7l)
