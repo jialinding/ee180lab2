@@ -1,5 +1,5 @@
 # Set compiler args
-CC=armcc
+CC=g++
 CFLAGS=-Wall -mfpu=neon -ftree-vectorize -c
 LDFLAGS=
 LDLIBS=-L /usr/lib $$(pkg-config --cflags --libs opencv) -pthread
