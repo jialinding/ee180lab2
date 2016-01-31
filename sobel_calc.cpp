@@ -15,9 +15,9 @@ void grayScale(Mat& img, Mat& img_gray_out)
   // Convert to grayscale
   for (int i=0; i<img.rows; i++) {
     for (int j=0; j<img.cols; j++) {
-      color = .114*img.data[STEP0*i + STEP1*j] +
-              .587*img.data[STEP0*i + STEP1*j + 1] +
-              .299*img.data[STEP0*i + STEP1*j + 2];
+      color = .114f*img.data[STEP0*i + STEP1*j] +
+              .587f*img.data[STEP0*i + STEP1*j + 1] +
+              .299f*img.data[STEP0*i + STEP1*j + 2];
       img_gray_out.data[IMG_WIDTH*i + j] = color;
     }
   }
