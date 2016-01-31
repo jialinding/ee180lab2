@@ -10,7 +10,7 @@ using namespace cv;
  ********************************************/
 void grayScale(Mat& img, Mat& img_gray_out)
 {
-  double color;
+  float color;
 
   // Convert to grayscale
   for (int i=0; i<img.rows; i++) {
