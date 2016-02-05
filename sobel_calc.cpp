@@ -11,12 +11,31 @@ using namespace cv;
 void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 {
   for (int i=0; i<img.rows; i++) {
-    for (int j=0; j<img.cols; j += 4) {
-			float a1 = 0;
-			float a2 = 0;
-			float a3 = 0;
-			float a4 = 0;
+    for (int j=0; j<(img.cols & ~3); j += 4) {
+			float r[4];
+			for (int k = 0; k < 4; k++)
+				r[k] = img.data[STEP0*i + STEP1*(j + k) + 0];
 			
+			float g[4];
+			for (int k = 0; k < 4; k++)
+				g[k] = img.data[STEP0*i + STEP1*(j + k) + 1];
+			
+			float b[4];
+			for (int k = 0; k < 4; k++)
+				b[k] = img.data[STEP0*i + STEP1*(j + k) + 2];
+			
+			float c[4];
+			for (int k = 0; k < 4; k++)
+				c[k] += r[k];
+			for (int k = 0; k < 4; k++)
+				c[k] += g[k];
+			for (int k = 0; k < 4; k++)
+				c[k] += b[k];
+			
+			for (int k = 0; k < 4; k++)
+				img_gray_out.data[IMG_WIDTH*i + (j + k)] += c[k];
+			
+			/*
 			a1 += .114f*img.data[STEP0*i + STEP1*(j + 0)];
 			a2 += .114f*img.data[STEP0*i + STEP1*(j + 1)];
 			a3 += .114f*img.data[STEP0*i + STEP1*(j + 2)];
@@ -32,10 +51,13 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 			a3 += .299f*img.data[STEP0*i + STEP1*(j + 2) + 2];
 			a4 += .299f*img.data[STEP0*i + STEP1*(j + 3) + 2];
 			
-			img_gray_out.data[IMG_WIDTH*i + (j + 0)] = a1;
+			
+			img_gray_out.data[IMG_WIDTH*i + (j + 0)] = a;
 			img_gray_out.data[IMG_WIDTH*i + (j + 1)] = a2;
 			img_gray_out.data[IMG_WIDTH*i + (j + 2)] = a3;
 			img_gray_out.data[IMG_WIDTH*i + (j + 3)] = a4;
+			*/
+			
 			/*
       color = .114f*img.data[STEP0*i + STEP1*j] +
               .587f*img.data[STEP0*i + STEP1*j + 1] +
