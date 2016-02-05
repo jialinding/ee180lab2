@@ -98,7 +98,7 @@ void *runSobelMT(void *ptr)
   // Keep track of the frames
   int i = 0;
 
-  //Mat src_left, img_gray_left, img_sobel_left;
+  Mat src_left, img_gray_left, img_sobel_left;
   while (1) {
     // Allocate memory to hold grayscale and sobel images
     img_gray = Mat(IMG_HEIGHT, IMG_WIDTH, CV_8UC1);
@@ -116,8 +116,8 @@ void *runSobelMT(void *ptr)
     pc_start(&perf_counters);
     // Jialin added here
     pthread_barrier_wait(&beginGrayScale);
-    Mat src_left = src(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
-    Mat img_gray_left = img_gray(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    src_left = src(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    img_gray_left = img_gray(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
     grayScale(src_left, img_gray_left);
     pthread_barrier_wait(&endGrayScale);
     // end
@@ -130,7 +130,7 @@ void *runSobelMT(void *ptr)
     pc_start(&perf_counters);
     // Jialin added here
     pthread_barrier_wait(&beginSobelCalc);
-    Mat img_sobel_left = img_sobel(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    img_sobel_left = img_sobel(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
     sobelCalc(img_gray_left, img_sobel_left);
     pthread_barrier_wait(&endSobelCalc);
     // end
