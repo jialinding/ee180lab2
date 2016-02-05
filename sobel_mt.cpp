@@ -66,8 +66,8 @@ void *runSobelMT(void *ptr)
       pthread_barrier_wait(&endGrayScale);
 
       pthread_barrier_wait(&beginSobelCalc);
-      img_sobel_right = img_sobel(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
-      sobelCalc(img_gray_right, img_sobel_right);
+      // img_sobel_right = img_sobel(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
+      // sobelCalc(img_gray_right, img_sobel_right);
       pthread_barrier_wait(&endSobelCalc);
 
       i++;
