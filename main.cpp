@@ -87,6 +87,8 @@ int mainSingleThread()
 pthread_barrier_t endSobel;
 pthread_barrier_t beginGrayScale;
 pthread_barrier_t endGrayScale;
+pthread_barrier_t beginSobelCalc;
+pthread_barrier_t endSobelCalc;
 pthread_mutex_t thread0 = PTHREAD_MUTEX_INITIALIZER;
 pthread_t thread0_id = 0;
 pthread_mutex_t img_gray_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -99,6 +101,8 @@ int mainMultiThread()
   pthread_barrier_init(&endSobel, NULL, 2);
   pthread_barrier_init(&beginGrayScale, NULL, 2);
   pthread_barrier_init(&endGrayScale, NULL, 2);
+  pthread_barrier_init(&beginSobelCalc, NULL, 2);
+  pthread_barrier_init(&endSobelCalc, NULL, 2);
 
   // Call threads
   int ret;
@@ -119,6 +123,8 @@ int mainMultiThread()
   pthread_barrier_destroy(&endSobel);
   pthread_barrier_destroy(&beginGrayScale);
   pthread_barrier_destroy(&endGrayScale);
+  pthread_barrier_destroy(&beginSobelCalc);
+  pthread_barrier_destroy(&endSobelCalc);
 
   // Return ok if sobel returns correctly
   return 0;

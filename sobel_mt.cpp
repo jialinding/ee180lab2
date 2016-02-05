@@ -57,12 +57,18 @@ void *runSobelMT(void *ptr)
   // the other half of the image.
   if (myID != thread0_id) {
     int i = 0;
+    Mat src_right, img_gray_right, img_sobel_right;
     while (1) {    
       pthread_barrier_wait(&beginGrayScale);  
-      // Mat src_right = src(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
-      // Mat img_gray_right = img_gray(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
-      // grayScale(src_right, img_gray_right);
+      src_right = src(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
+      img_gray_right = img_gray(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
+      grayScale(src_right, img_gray_right);
       pthread_barrier_wait(&endGrayScale);
+
+      pthread_barrier_wait(&beginSobelCalc);
+      img_sobel_right = img_sobel(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
+      sobelCalc(img_gray_right, img_sobel_right);
+      pthread_barrier_wait(&endSobelCalc);
 
       i++;
 
@@ -92,6 +98,7 @@ void *runSobelMT(void *ptr)
   // Keep track of the frames
   int i = 0;
 
+  Mat src_left, img_gray_left, img_sobel_left;
   while (1) {
     // Allocate memory to hold grayscale and sobel images
     img_gray = Mat(IMG_HEIGHT, IMG_WIDTH, CV_8UC1);
@@ -109,9 +116,9 @@ void *runSobelMT(void *ptr)
     pc_start(&perf_counters);
     // Jialin added here
     pthread_barrier_wait(&beginGrayScale);
-    // Mat src_left = src(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
-    // Mat img_gray_left = img_gray(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
-    // grayScale(src_left, img_gray_left);
+    src_left = src(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    img_gray_left = img_gray(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    grayScale(src_left, img_gray_left);
     pthread_barrier_wait(&endGrayScale);
     // end
     pc_stop(&perf_counters);
@@ -121,7 +128,12 @@ void *runSobelMT(void *ptr)
     sobel_ic += perf_counters.ic.count;
 
     pc_start(&perf_counters);
-    sobelCalc(img_gray, img_sobel);
+    // Jialin added here
+    pthread_barrier_wait(&beginSobelCalc);
+    img_sobel_left = img_sobel(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    sobelCalc(img_gray_left, img_sobel_left);
+    pthread_barrier_wait(&endSobelCalc);
+    // end
     pc_stop(&perf_counters);
 
     sobel_time = perf_counters.cycles.count;
