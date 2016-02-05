@@ -11,7 +11,7 @@ using namespace cv;
 void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 {
   for (int i=0; i<img.rows; i++) {
-    for (int j=0; j<(img.cols & ~3); j += 4) {
+    for (int j=0; j<img.cols; j += 4) {
 			
 			float r[4];
 			for (int k = 0; k < 4; k++)
