@@ -44,10 +44,10 @@ void grayScale(Mat& img, Mat& img_gray_out)
       output = vmlaq_f32(output, data, w3);
       
       // vst1q_f32(img_gray_out.data[IMG_WIDTH*i + j], output);
-      vst1q_lane_f32(img_gray_out.data[IMG_WIDTH*i + j], output, 0);
-      vst1q_lane_f32(img_gray_out.data[IMG_WIDTH*i + j+1], output, 1);
-      vst1q_lane_f32(img_gray_out.data[IMG_WIDTH*i + j+2], output, 2);
-      vst1q_lane_f32(img_gray_out.data[IMG_WIDTH*i + j+3], output, 3);
+      vst1q_lane_f32((float_32_t*)img_gray_out.data[IMG_WIDTH*i + j], output, 0);
+      vst1q_lane_f32((float_32_t*)img_gray_out.data[IMG_WIDTH*i + j+1], output, 1);
+      vst1q_lane_f32((float_32_t*)img_gray_out.data[IMG_WIDTH*i + j+2], output, 2);
+      vst1q_lane_f32((float_32_t*)img_gray_out.data[IMG_WIDTH*i + j+3], output, 3);
 
       // color = .114f*img.data[STEP0*i + STEP1*j] +
       //         .587f*img.data[STEP0*i + STEP1*j + 1] +
