@@ -13,7 +13,6 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
   for (int i=0; i<img.rows; i++) {
     for (int j=0; j<(img.cols & ~3); j += 4) {
 			
-			/*
 			float r[4];
 			for (int k = 0; k < 4; k++)
 				r[k] = img.data[STEP0*i + STEP1*(j + k) + 0];
@@ -28,15 +27,14 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 			
 			float c[4];
 			for (int k = 0; k < 4; k++)
-				c[k] += r[k];
+				c[k] += .114f*r[k];
 			for (int k = 0; k < 4; k++)
-				c[k] += g[k];
+				c[k] += .587f*g[k];
 			for (int k = 0; k < 4; k++)
-				c[k] += b[k];
+				c[k] += .299f*b[k];
 			
 			for (int k = 0; k < 4; k++)
 				img_gray_out.data[IMG_WIDTH*i + (j + k)] += c[k];
-			*/
 			
 			/*
 			a1 += .114f*img.data[STEP0*i + STEP1*(j + 0)];
