@@ -109,9 +109,9 @@ void *runSobelMT(void *ptr)
     pc_start(&perf_counters);
     // Jialin added here
     pthread_barrier_wait(&beginGrayScale);
-    Mat src_left = src(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
-    Mat img_gray_left = img_gray(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
-    grayScale(src_left, img_gray_left);
+    // Mat src_left = src(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    // Mat img_gray_left = img_gray(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
+    // grayScale(src_left, img_gray_left);
     pthread_barrier_wait(&endGrayScale);
     // end
     pc_stop(&perf_counters);
