@@ -27,7 +27,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 			
 			float c[4];
 			for (int k = 0; k < 4; k++)
-				c[k] += .114f*r[k];
+				c[k] = .114f*r[k];
 			for (int k = 0; k < 4; k++)
 				c[k] += .587f*g[k];
 			for (int k = 0; k < 4; k++)
