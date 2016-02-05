@@ -59,9 +59,9 @@ void *runSobelMT(void *ptr)
     int i = 0;
     while (1) {    
       pthread_barrier_wait(&beginGrayScale);  
-      Mat src_right = src(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
-      Mat img_gray_right = img_gray(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
-      grayScale(src_right, img_gray_right);
+      // Mat src_right = src(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
+      // Mat img_gray_right = img_gray(Rect(IMG_WIDTH/2, 0, IMG_WIDTH - IMG_WIDTH/2, IMG_HEIGHT));
+      // grayScale(src_right, img_gray_right);
       pthread_barrier_wait(&endGrayScale);
 
       i++;
