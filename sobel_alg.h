@@ -28,6 +28,10 @@ extern pthread_barrier_t endSobel;
 extern pthread_mutex_t thread0;
 extern pthread_t thread0_id;
 
+// Jialin added this
+extern pthread_barrier_t beginGrayScale;
+extern pthread_barrier_t endGrayScale;
+
 
 // Commandline options
 struct opts {

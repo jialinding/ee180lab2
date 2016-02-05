@@ -85,8 +85,11 @@ int mainSingleThread()
 
 // This mutex will be used to allow threads to contest for thread 0 status
 pthread_barrier_t endSobel;
+pthread_barrier_t beginGrayScale;
+pthread_barrier_t endGrayScale;
 pthread_mutex_t thread0 = PTHREAD_MUTEX_INITIALIZER;
 pthread_t thread0_id = 0;
+pthread_mutex_t img_gray_mutex = PTHREAD_MUTEX_INITIALIZER;
 int mainMultiThread()
 {
   // Thread variables
@@ -94,6 +97,8 @@ int mainMultiThread()
 
   // Set up a barrier to synchronize both threads at the end of runSobel
   pthread_barrier_init(&endSobel, NULL, 2);
+  pthread_barrier_init(&beginGrayScale, NULL, 2);
+  pthread_barrier_init(&endGrayScale, NULL, 2);
 
   // Call threads
   int ret;
@@ -112,6 +117,8 @@ int mainMultiThread()
 
   // Destroy the barriers
   pthread_barrier_destroy(&endSobel);
+  pthread_barrier_destroy(&beginGrayScale);
+  pthread_barrier_destroy(&endGrayScale);
 
   // Return ok if sobel returns correctly
   return 0;
