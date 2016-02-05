@@ -8,10 +8,8 @@ using namespace cv;
  * Output: None directly. Modifies a ref parameter img_gray_out
  * Desc: This module converts the image to grayscale
  ********************************************/
-void grayScale(Mat& img, Mat& img_gray_out)
+void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 {
-  float color;
-
   for (int i=0; i<img.rows; i++) {
     for (int j=0; j<img.cols; j += 4) {
 			float a1 = 0;
