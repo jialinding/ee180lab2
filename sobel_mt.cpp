@@ -131,7 +131,8 @@ void *runSobelMT(void *ptr)
     // Jialin added here
     // pthread_barrier_wait(&beginSobelCalc);
     img_sobel_left = img_sobel(Rect(0, 0, IMG_WIDTH/2, IMG_HEIGHT));
-    sobelCalc(img_gray_left.clone(), img_sobel_left);
+    Mat img_gray_left_clone = img_gray_left.clone();
+    sobelCalc(img_gray_left_clone, img_sobel_left);
     // pthread_barrier_wait(&endSobelCalc);
     // end
     pc_stop(&perf_counters);
