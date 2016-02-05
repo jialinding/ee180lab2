@@ -82,7 +82,7 @@ void runSobelST()
     sobel_ic += perf_counters.ic.count;
 
     pc_start(&perf_counters);
-    sobelCalc(img_gray, img_sobel);
+    sobelCalc(img_gray, img_sobel, 0);
     pc_stop(&perf_counters);
 
     sobel_time = perf_counters.cycles.count;

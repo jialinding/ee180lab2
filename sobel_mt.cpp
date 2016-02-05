@@ -66,7 +66,7 @@ void *runSobelMT(void *ptr)
       pthread_barrier_wait(&endGrayScale);
 
       pthread_barrier_wait(&beginSobelCalc);
-      sobelCalc(img_gray_right, img_sobel_right, false);
+      sobelCalc(img_gray_right, img_sobel_right, 2);
       pthread_barrier_wait(&endSobelCalc);
 
       i++;
@@ -129,7 +129,7 @@ void *runSobelMT(void *ptr)
     pc_start(&perf_counters);
     // Jialin added here
     pthread_barrier_wait(&beginSobelCalc);
-    sobelCalc(img_gray_left_clone, img_sobel, true);
+    sobelCalc(img_gray_left_clone, img_sobel, 1);
     pthread_barrier_wait(&endSobelCalc);
     // end
     pc_stop(&perf_counters);

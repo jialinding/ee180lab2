@@ -32,7 +32,7 @@ void grayScale(Mat& img, Mat& img_gray_out)
  *  direction, calculates the gradient in the y direction and sum it with Gx
  *  to finish the Sobel calculation
  ********************************************/
-void sobelCalc(Mat& img_gray, Mat& img_sobel_out, bool side)
+void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
 {
   Mat img_outx = img_gray.clone();
   Mat img_outy = img_gray.clone();
@@ -41,10 +41,13 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, bool side)
   unsigned short sobel;
 
   int col_begin, col_end;
-  if (side) {
+  if (side == 0) { // all
+    col_begin = 1;
+    col_end = img_gray.cols-1;
+  } else if (side == 1) { // left
     col_begin = 1;
     col_end = IMG_WIDTH/2;
-  } else {
+  } else { // right
     col_begin = IMG_WIDTH/2;
     col_end = img_gray.cols-1;
   }
