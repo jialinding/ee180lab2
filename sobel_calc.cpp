@@ -18,7 +18,7 @@ void grayScale(Mat& img, Mat& img_gray_out)
   img.convertTo(img_float, CV_32F);
   float32x4_t output, w1, w2, w3, data;
   Mat img_gray_out_float;
-  img_gray_out_float.create(IMG_HEIGHT, IMG_WIDTH, CV32F);
+  img_gray_out_float.create(IMG_HEIGHT, IMG_WIDTH, CV_32F);
   w1 = vdupq_n_f32(.114f);
   w2 = vdupq_n_f32(.587f);
   w3 = vdupq_n_f32(.299f);
