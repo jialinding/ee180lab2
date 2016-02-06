@@ -88,7 +88,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
   }
 
   // Calculate the x convolution
-  for (int i=1; i<img_gray.rows-1; i++) {
+  for (int i=1; i<ROWS-1; i++) {
     for (int j=col_begin; j<col_end; j++) {
       sobel = abs(img_gray.data[IMG_WIDTH*(i-1) + (j-1)] -
 		  img_gray.data[IMG_WIDTH*(i+1) + (j-1)] +
@@ -103,7 +103,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
   }
 
   // Calc the y convolution
-  for (int i=1; i<img_gray.rows-1; i++) {
+  for (int i=1; i<ROWS-1; i++) {
     for (int j=col_begin; j<col_end; j++) {
      sobel = abs(img_gray.data[IMG_WIDTH*(i-1) + (j-1)] -
 		   img_gray.data[IMG_WIDTH*(i-1) + (j+1)] +
@@ -119,7 +119,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
   }
 
   // Combine the two convolutions into the output image
-  for (int i=1; i<img_gray.rows-1; i++) {
+  for (int i=1; i<ROWS-1; i++) {
     for (int j=col_begin; j<col_end; j++) {
       sobel = asdfx[IMG_WIDTH*(i) + j] +
 	asdfy[IMG_WIDTH*(i) + j];
@@ -128,7 +128,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
     }
   }
 	
-  for (int i=1; i<img_gray.rows-1; i++) {
+  for (int i=1; i<ROWS-1; i++) {
     for (int j=col_begin; j<col_end; j++) {
 			img_sobel_out.data[i * IMG_WIDTH + j] = asdf[i * IMG_WIDTH + j];
 		}
