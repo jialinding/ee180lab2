@@ -66,10 +66,10 @@ void grayScale(Mat& img, Mat& img_gray_out)
       
       vst1q_f32(img_gray_out_float, output);
 
-      img_gray_out[IMG_WIDTH*i + j] = (unsigned char)img_gray_out_float[0];
-      img_gray_out[IMG_WIDTH*i + j + 1] = (unsigned char)img_gray_out_float[1];
-      img_gray_out[IMG_WIDTH*i + j + 2] = (unsigned char)img_gray_out_float[2];
-      img_gray_out[IMG_WIDTH*i + j + 3] = (unsigned char)img_gray_out_float[3];
+      img_gray_out.data[IMG_WIDTH*i + j] = (unsigned char)img_gray_out_float[0];
+      img_gray_out.data[IMG_WIDTH*i + j + 1] = (unsigned char)img_gray_out_float[1];
+      img_gray_out.data[IMG_WIDTH*i + j + 2] = (unsigned char)img_gray_out_float[2];
+      img_gray_out.data[IMG_WIDTH*i + j + 3] = (unsigned char)img_gray_out_float[3];
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j], output, 0);
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+1], output, 1);
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+2], output, 2);
