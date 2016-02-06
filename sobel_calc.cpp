@@ -14,11 +14,11 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	const int ROWS = IMG_HEIGHT;
 	const int COLS = IMG_WIDTH;
 	
-  for (int i=0; i< (ROWS & ~3); i++) {
-    for (int j=0; j< (COLS & ~3); j++) {
-      img_gray_out.data[j] = 100;
+  //for (int i=0; i< (ROWS & ~3); i++) {
+    for (int j=0; j < 64; j++) {
+      img_gray_out.data[j] = j;
     }
-  }
+		//}
 	/*
   for (int i=0; i< (ROWS & ~3); i++) {
     for (int j=0; j< (COLS & ~3); j++) {
