@@ -16,6 +16,12 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	
   for (int i=0; i< (ROWS & ~3); i++) {
     for (int j=0; j< (COLS & ~3); j++) {
+      img_gray_out.data[IMG_WIDTH*i + j] = 100;
+    }
+  }
+	/*
+  for (int i=0; i< (ROWS & ~3); i++) {
+    for (int j=0; j< (COLS & ~3); j++) {
       color = .114f*img.data[STEP0*i + STEP1*j] +
               .587f*img.data[STEP0*i + STEP1*j + 1] +
               .299f*img.data[STEP0*i + STEP1*j + 2];
@@ -23,6 +29,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
       img_gray_out.data[IMG_WIDTH*i + j] = color;
     }
   }
+	*/
 }
 
 /*******************************************
