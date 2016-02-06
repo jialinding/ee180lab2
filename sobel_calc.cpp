@@ -10,6 +10,19 @@ using namespace cv;
  ********************************************/
 void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 {
+  float color;
+
+  // Convert to grayscale
+  for (int i=0; i<img.rows; i++) {
+    for (int j=0; j<img.cols; j++) {
+      color = .114f*img.data[STEP0*i + STEP1*j] +
+              .587f*img.data[STEP0*i + STEP1*j + 1] +
+              .299f*img.data[STEP0*i + STEP1*j + 2];
+      img_gray_out.data[IMG_WIDTH*i + j] = color;
+    }
+  }
+	
+	/*
 	float color;
 	const int ROWS = IMG_HEIGHT;
 	const int COLS = IMG_WIDTH;
@@ -33,6 +46,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 			img_gray_out.data[i] = asdf[i];
 		}
 		//}
+	*/
 	/*
   for (int i=0; i< (ROWS & ~3); i++) {
     for (int j=0; j< (COLS & ~3); j++) {
