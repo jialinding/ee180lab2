@@ -11,8 +11,10 @@ using namespace cv;
 void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 {
 	float color;
-  for (int i=0; i<img.rows; i++) {
-    for (int j=0; j<img.cols; j++) {
+	const int ROWS = img.rows;
+	const int COLS = img.cols;
+  for (int i=0; i<ROWS; i++) {
+    for (int j=0; j<COLS; j++) {
       color = .114f*img.data[STEP0*i + STEP1*j] +
               .587f*img.data[STEP0*i + STEP1*j + 1] +
               .299f*img.data[STEP0*i + STEP1*j + 2];
