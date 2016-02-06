@@ -13,10 +13,10 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	float color;
 	const int ROWS = IMG_HEIGHT;
 	const int COLS = IMG_WIDTH;
-
-#pragma ivdep
+	
+	__promise(0 < ROWS && (ROWS % 4) == 0);
   for (int i=0; i<ROWS; i++) {
-		#pragma ivdep
+		__promise(0 < COLS && (COLS % 4) == 0);
     for (int j=0; j<COLS; j++) {
       color = .114f*img.data[STEP0*i + STEP1*j] +
               .587f*img.data[STEP0*i + STEP1*j + 1] +
