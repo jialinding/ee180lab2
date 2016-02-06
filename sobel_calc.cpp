@@ -14,11 +14,11 @@ void grayScale(Mat& img, Mat& img_gray_out)
 {
   // float color; // converted from double to float
   Mat img_float;
-  img_float.create(IMG_HEIGHT, IMG_WIDTH, CV_32F);
-  img.convertTo(img_float, CV_32F);
+  img_float.create(IMG_HEIGHT, IMG_WIDTH, 5);
+  img.convertTo(img_float, 5);
   float32x4_t output, w1, w2, w3, data;
   Mat img_gray_out_float;
-  img_gray_out_float.create(IMG_HEIGHT, IMG_WIDTH, CV_32F);
+  img_gray_out_float.create(IMG_HEIGHT, IMG_WIDTH, 5);
   w1 = vdupq_n_f32(.114f);
   w2 = vdupq_n_f32(.587f);
   w3 = vdupq_n_f32(.299f);
@@ -55,7 +55,7 @@ void grayScale(Mat& img, Mat& img_gray_out)
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+2], output, 2);
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+3], output, 3);
 
-      img_gray_out_float.convertTo(img_gray_out, CV_8UC1);
+      img_gray_out_float.convertTo(img_gray_out, 0);
 
       // color = .114f*img.data[STEP0*i + STEP1*j] +
       //         .587f*img.data[STEP0*i + STEP1*j + 1] +
