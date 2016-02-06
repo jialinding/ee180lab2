@@ -252,7 +252,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
 
       for (int k = 0; k < 8; k++) {
         sobel = (outy[k] > 255) ? 255 : outy[k];
-        img_outy.data[IMG_WIDTH*(i+k) + j] = sobel;
+        img_outy.data[IMG_WIDTH*(i) + j + k] = sobel;
       }
      // sobel = abs(img_gray.data[IMG_WIDTH*(i-1) + (j-1)] -
 		   // img_gray.data[IMG_WIDTH*(i-1) + (j+1)] +
