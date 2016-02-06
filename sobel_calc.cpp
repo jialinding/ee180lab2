@@ -1,5 +1,6 @@
 #include <arm_neon.h>
 #include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/opencv.hpp>
 #include "sobel_alg.h"
 using namespace cv;
 
@@ -11,10 +12,10 @@ using namespace cv;
  ********************************************/
 void grayScale(Mat& img, Mat& img_gray_out)
 {
-  float color; // converted from double to float
+  // float color; // converted from double to float
   Mat img_float;
-  // img_float.create(IMG_HEIGHT, IMG_WIDTH, CV_32FC1);
-  img.convertTo(img_float, CV_32FC1);
+  img_float.create(IMG_HEIGHT, IMG_WIDTH, CV_32F);
+  img.convertTo(img_float, CV_32F);
   float32x4_t output, w1, w2, w3, data;
   Mat img_gray_out_float;
   img_gray_out_float.create(IMG_HEIGHT, IMG_WIDTH, CV32FC1);
