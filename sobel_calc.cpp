@@ -106,18 +106,79 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
     col_end = img_gray.cols-1;
   }
 
+  uint16x8_t img_gray_data, sobel_out, two;
   // Calculate the x convolution
   for (int i=1; i<img_gray.rows-1; i++) {
-    for (int j=col_begin; j<col_end; j++) {
-      sobel = abs(img_gray.data[IMG_WIDTH*(i-1) + (j-1)] -
-		  img_gray.data[IMG_WIDTH*(i+1) + (j-1)] +
-		  2*img_gray.data[IMG_WIDTH*(i-1) + (j)] -
-		  2*img_gray.data[IMG_WIDTH*(i+1) + (j)] +
-		  img_gray.data[IMG_WIDTH*(i-1) + (j+1)] -
-		  img_gray.data[IMG_WIDTH*(i+1) + (j+1)]);
+    for (int j=col_begin; j<col_end; j+=8) {
+      sobel_out = vdupq_n_s16(0);
+      two = vdupq_n_s16(2);
+      int16_t img_gray_16[8];
 
-      sobel = (sobel > 255) ? 255 : sobel;
-      img_outx.data[IMG_WIDTH*(i) + (j)] = sobel;
+      // img_gray.data[IMG_WIDTH*(i-1) + (j-1)]
+      img_gray_16[0] = img_gray.data[IMG_WIDTH*(i-1) + (j-1)];
+      img_gray_16[1] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 1];
+      img_gray_16[2] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 2];
+      img_gray_16[3] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 3];
+      img_gray_16[4] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 4];
+      img_gray_16[5] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 5];
+      img_gray_16[6] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 6];
+      img_gray_16[7] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 7];
+      img_gray_16[8] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 8];
+      img_gray_16[9] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 9];
+
+      img_gray_data = vld1q_s16(&img_gray_16[0]);
+      sobel_out = vaddq_s16(sobel_out, img_gray_data);
+
+      // 2*img_gray.data[IMG_WIDTH*(i-1) + (j)]
+      img_gray_data = vld1q_s16(&img_gray_16[1]);
+      sobel_out = vmlaq_s16(sobel_out, img_gray_data, two);
+
+      // img_gray.data[IMG_WIDTH*(i-1) + (j+1)]
+      img_gray_data = vld1q_s16(&img_gray_16[2]);
+      sobel_out = vaddq_s16(sobel_out, img_gray_data);
+
+      // img_gray.data[IMG_WIDTH*(i+1) + (j-1)]
+      img_gray_16[0] = img_gray.data[IMG_WIDTH*(i+1) + (j-1)];
+      img_gray_16[1] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 1];
+      img_gray_16[2] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 2];
+      img_gray_16[3] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 3];
+      img_gray_16[4] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 4];
+      img_gray_16[5] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 5];
+      img_gray_16[6] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 6];
+      img_gray_16[7] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 7];
+      img_gray_16[8] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 8];
+      img_gray_16[9] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 9];
+
+      img_gray_data = vld1q_s16(&img_gray_16[0]);
+      sobel_out = vsubq_s16(sobel_out, img_gray_data);
+
+      // 2*img_gray.data[IMG_WIDTH*(i+1) + (j)]
+      img_gray_data = vld1q_s16(&img_gray_16[1]);
+      sobel_out = vmlsq_s16(sobel_out, img_gray_data, two);
+
+      // img_gray.data[IMG_WIDTH*(i+1) + (j+1)]
+      img_gray_data = vld1q_s16(&img_gray_16[2]);
+      sobel_out = vsubq_s16(sobel_out, img_gray_data);
+
+      sobel_out = vqabsq_s16(sobel_out);
+
+      int16_t outx[8];
+      vst1q_s16(outx, sobel_out);
+
+      for (int k = 0; k < 8; k++) {
+        sobel = (outx[k] > 255) ? 255 : outx[k];
+        img_outx.data[IMG_WIDTH*(i) + j + k] = sobel;
+      }
+
+    //   sobel = abs(img_gray.data[IMG_WIDTH*(i-1) + (j-1)] -
+		  // img_gray.data[IMG_WIDTH*(i+1) + (j-1)] +
+		  // 2*img_gray.data[IMG_WIDTH*(i-1) + (j)] -
+		  // 2*img_gray.data[IMG_WIDTH*(i+1) + (j)] +
+		  // img_gray.data[IMG_WIDTH*(i-1) + (j+1)] -
+		  // img_gray.data[IMG_WIDTH*(i+1) + (j+1)]);
+
+    //   sobel = (sobel > 255) ? 255 : sobel;
+    //   img_outx.data[IMG_WIDTH*(i) + (j)] = sobel;
     }
   }
 
