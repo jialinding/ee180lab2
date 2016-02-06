@@ -23,7 +23,8 @@ void grayScale(Mat& img, Mat& img_gray_out)
   w2 = vdupq_n_f32(.587f);
   w3 = vdupq_n_f32(.299f);
 
-  float32_t img_float[];
+  float32_t img_float[4];
+  float32_t img_gray_out_float[4];
 
   // Convert to grayscale
   for (int i=0; i<img.rows; i++) {
@@ -63,7 +64,6 @@ void grayScale(Mat& img, Mat& img_gray_out)
       data = vld1q_f32(&img_float[0]);
       output = vmlaq_f32(output, data, w3);
       
-      float32_t img_gray_out_float[];
       vst1q_f32(img_gray_out_float, output);
 
       img_gray_out[IMG_WIDTH*i + j] = (unsigned char)img_gray_out_float[0];
