@@ -68,15 +68,12 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
   // Apply Sobel filter to black & white image
   unsigned short sobel;
 	
-	
 	const int ROWS = img_gray.rows;
 	const int COLS = img_gray.cols;
 	
 	unsigned char asdfx[IMG_WIDTH*IMG_HEIGHT];
 	unsigned char asdfy[IMG_WIDTH*IMG_HEIGHT];
 	unsigned char asdf[IMG_WIDTH*IMG_HEIGHT];
-	
-	
 
   int col_begin, col_end;
   if (side == 0) { // all
