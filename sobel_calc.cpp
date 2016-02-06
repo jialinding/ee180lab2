@@ -13,6 +13,18 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	float color;
 	const int ROWS = IMG_HEIGHT;
 	const int COLS = IMG_WIDTH;
+	
+	for (int p = 0; p < ROWS*COLS; p++) {
+		int i = p / COLS;
+		int j = p % COLS;
+		
+    color = .114f*img.data[STEP0*i + STEP1*j] +
+            .587f*img.data[STEP0*i + STEP1*j + 1] +
+            .299f*img.data[STEP0*i + STEP1*j + 2];
+
+    img_gray_out.data[IMG_WIDTH*i + j] = color;
+	}
+	/*
   for (int i=0; i<ROWS; i++) {
     for (int j=0; j<COLS; j++) {
       color = .114f*img.data[STEP0*i + STEP1*j] +
@@ -20,47 +32,9 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
               .299f*img.data[STEP0*i + STEP1*j + 2];
 
       img_gray_out.data[IMG_WIDTH*i + j] = color;
-
-			/*
-			for (int k = 0; k < 4; k++) {
-				float r = img.data[STEP0*i + STEP1*(j + k) + 0];
-				float g = img.data[STEP0*i + STEP1*(j + k) + 1];
-				float b = img.data[STEP0*i + STEP1*(j + k) + 2];
-				img_gray_out.data[IMG_WIDTH*i + (j + k)] = .114f*r + .587f*g + .299f*b;
-			}*/
-			
-			/*
-			a1 += .114f*img.data[STEP0*i + STEP1*(j + 0)];
-			a2 += .114f*img.data[STEP0*i + STEP1*(j + 1)];
-			a3 += .114f*img.data[STEP0*i + STEP1*(j + 2)];
-			a4 += .114f*img.data[STEP0*i + STEP1*(j + 3)];
-			
-			a1 += .587f*img.data[STEP0*i + STEP1*(j + 0) + 1];
-			a2 += .587f*img.data[STEP0*i + STEP1*(j + 1) + 1];
-			a3 += .587f*img.data[STEP0*i + STEP1*(j + 2) + 1];
-			a4 += .587f*img.data[STEP0*i + STEP1*(j + 3) + 1];
-			
-			a1 += .299f*img.data[STEP0*i + STEP1*(j + 0) + 2];
-			a2 += .299f*img.data[STEP0*i + STEP1*(j + 1) + 2];
-			a3 += .299f*img.data[STEP0*i + STEP1*(j + 2) + 2];
-			a4 += .299f*img.data[STEP0*i + STEP1*(j + 3) + 2];
-			
-			
-			img_gray_out.data[IMG_WIDTH*i + (j + 0)] = a;
-			img_gray_out.data[IMG_WIDTH*i + (j + 1)] = a2;
-			img_gray_out.data[IMG_WIDTH*i + (j + 2)] = a3;
-			img_gray_out.data[IMG_WIDTH*i + (j + 3)] = a4;
-			*/
-			
-			/*
-      color = .114f*img.data[STEP0*i + STEP1*j] +
-              .587f*img.data[STEP0*i + STEP1*j + 1] +
-              .299f*img.data[STEP0*i + STEP1*j + 2];
-
-      img_gray_out.data[IMG_WIDTH*i + j] = color;
-			*/
     }
   }
+	*/
 }
 
 /*******************************************
