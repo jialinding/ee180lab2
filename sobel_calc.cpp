@@ -112,7 +112,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
     for (int j=col_begin; j<col_end; j+=8) {
       sobel_out = vdupq_n_s16(0);
       two = vdupq_n_s16(2);
-      int16_t img_gray_16[8];
+      int16_t img_gray_16[10];
 
       // img_gray.data[IMG_WIDTH*(i-1) + (j-1)]
       img_gray_16[0] = img_gray.data[IMG_WIDTH*(i-1) + (j-1)];
