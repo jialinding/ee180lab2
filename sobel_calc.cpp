@@ -11,27 +11,27 @@ using namespace cv;
 void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 {
 	float color;
-	const int ROWS = img_gray.rows;
-	const int COLS = img_gray.cols;
+	const int ROWS = img.rows;
+	const int COLS = img.cols;
 	
 	unsigned char asdf[ROWS*COLS*3];
 	for (int i = 0; i < ROWS*COLS*3; i++) {
 		asdf[i] = img.data[i];
 	}
 	
-    for (int i=0; i < (ROWS & ~3); i++) {
-			for (int j=0; j < (COLS & ~3); j++) {
-	      color = .114f*img.data[STEP0*i + STEP1*j] +
-				        .587f*img.data[STEP0*i + STEP1*j + 1] +
-				        .299f*img.data[STEP0*i + STEP1*j + 2];
+	for (int i=0; i < (ROWS & ~3); i++) {
+		for (int j=0; j < (COLS & ~3); j++) {
+			color = .114f*img.data[STEP0*i + STEP1*j] +
+				.587f*img.data[STEP0*i + STEP1*j + 1] +
+					.299f*img.data[STEP0*i + STEP1*j + 2];
 			
-	    	asdf[i * IMG_WIDTH + j] = color;
-			}
-    }
-		
-		for (int i = 0; i < ((ROWS*COLS) & ~3); i++) {
-			img_gray_out.data[i] = asdf[i];
+			asdf[i * IMG_WIDTH + j] = color;
 		}
+	}
+		
+	for (int i = 0; i < ((ROWS*COLS) & ~3); i++) {
+		img_gray_out.data[i] = asdf[i];
+	}
 		//}
 	/*
   for (int i=0; i< (ROWS & ~3); i++) {
