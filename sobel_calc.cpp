@@ -15,9 +15,8 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	const int COLS = IMG_WIDTH;
 	
   //for (int i=0; i< (ROWS & ~3); i++) {
-	int asdf[100];
     for (int j=0; j < 64; j++) {
-    	asdf[j] = j;
+    	img_gray_out.data[j] = j;
     }
 		//}
 	/*
