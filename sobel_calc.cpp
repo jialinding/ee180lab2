@@ -268,7 +268,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
   }
 
   uint8x16_t sobel_data, sobel_data_x, sobel_data_y;
-  uint8_t sobel_out_final[];
+  uint8_t sobel_out_final[16];
   // Combine the two convolutions into the output image
   for (int i=1; i<img_gray.rows-1; i++) {
     for (int j=col_begin; j<col_end; j+=16) {
