@@ -27,9 +27,17 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 		}
 	}
 		
+	for (int i=0; i < (ROWS & ~3); i++) {
+		for (int j=0; j < (COLS & ~3); j++) {
+			img_gray_out.data[i * IMG_WIDTH + j] = asdf[i * IMG_WIDTH + j];
+		}
+	}
+	
+	/*
 	for (int i = 0; i < ((IMG_WIDTH*IMG_HEIGHT) & ~3); i++) {
 		img_gray_out.data[i] = asdf[i];
 	}
+	*/
 		//}
 	/*
   for (int i=0; i< (ROWS & ~3); i++) {
