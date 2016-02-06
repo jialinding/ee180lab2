@@ -25,7 +25,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	      //        .587f*img.data[STEP0*i + STEP1*j + 1] +
 	      //        .299f*img.data[STEP0*i + STEP1*j + 2];
 			
-	    	asdf[i * ROWS + j] = j;
+	    	asdf[i * COLS + j] = j;
 			}
     }
 		
