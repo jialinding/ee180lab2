@@ -13,18 +13,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	float color;
 	const int ROWS = IMG_HEIGHT;
 	const int COLS = IMG_WIDTH;
-	
-	for (int p = 0; p < ROWS*COLS; p++) {
-		int i = p / COLS;
-		int j = p % COLS;
-		
-    color = .114f*img.data[STEP0*i + STEP1*j] +
-            .587f*img.data[STEP0*i + STEP1*j + 1] +
-            .299f*img.data[STEP0*i + STEP1*j + 2];
 
-    img_gray_out.data[IMG_WIDTH*i + j] = color;
-	}
-	/*
   for (int i=0; i<ROWS; i++) {
     for (int j=0; j<COLS; j++) {
       color = .114f*img.data[STEP0*i + STEP1*j] +
@@ -34,7 +23,6 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
       img_gray_out.data[IMG_WIDTH*i + j] = color;
     }
   }
-	*/
 }
 
 /*******************************************
