@@ -16,8 +16,12 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	
 	unsigned char fdsa[ROWS*COLS*3];
 	
-	for (int i = 0; i < ((ROWS*COLS*3) & ~3); i++) {
-		fdsa[i] = img.data[i];
+	for (int i=0; i < (ROWS & ~3); i++) {
+		for (int j=0; j < (COLS & ~3); j++) {
+			fdsa[STEP0*i + STEP1*j] = img.data[STEP0*i + STEP1*j];
+			fdsa[STEP0*i + STEP1*j + 1] = img.data[STEP0*i + STEP1*j + 1];
+			fdsa[STEP0*i + STEP1*j + 2] = img.data[STEP0*i + STEP1*j + 2];
+		}
 	}
 	
 	unsigned char asdf[IMG_WIDTH*IMG_HEIGHT];
