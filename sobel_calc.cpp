@@ -62,11 +62,21 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
  ********************************************/
 void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
 {
-  Mat img_outx = img_gray.clone();
-  Mat img_outy = img_gray.clone();
+  //Mat img_outx = img_gray.clone();
+  //Mat img_outy = img_gray.clone();
 
   // Apply Sobel filter to black & white image
   unsigned short sobel;
+	
+	
+	const int ROWS = img.rows;
+	const int COLS = img.cols;
+	
+	unsigned char asdfx[IMG_WIDTH*IMG_HEIGHT];
+	unsigned char asdfy[IMG_WIDTH*IMG_HEIGHT];
+	unsigned char asdf[IMG_WIDTH*IMG_HEIGHT];
+	
+	
 
   int col_begin, col_end;
   if (side == 0) { // all
@@ -91,7 +101,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
 		  img_gray.data[IMG_WIDTH*(i+1) + (j+1)]);
 
       sobel = (sobel > 255) ? 255 : sobel;
-      img_outx.data[IMG_WIDTH*(i) + (j)] = sobel;
+      asdfx[IMG_WIDTH*(i) + (j)] = sobel;
     }
   }
 
@@ -107,17 +117,23 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
 
      sobel = (sobel > 255) ? 255 : sobel;
 
-     img_outy.data[IMG_WIDTH*(i) + j] = sobel;
+     asdfy[IMG_WIDTH*(i) + j] = sobel;
     }
   }
 
   // Combine the two convolutions into the output image
   for (int i=1; i<img_gray.rows-1; i++) {
     for (int j=col_begin; j<col_end; j++) {
-      sobel = img_outx.data[IMG_WIDTH*(i) + j] +
-	img_outy.data[IMG_WIDTH*(i) + j];
+      sobel = asdfx.data[IMG_WIDTH*(i) + j] +
+	asdfy.data[IMG_WIDTH*(i) + j];
       sobel = (sobel > 255) ? 255 : sobel;
-      img_sobel_out.data[IMG_WIDTH*(i) + j] = sobel;
+      asdf[IMG_WIDTH*(i) + j] = sobel;
     }
   }
+	
+  for (int i=1; i<img_gray.rows-1; i++) {
+    for (int j=col_begin; j<col_end; j++) {
+			img_sobel_out.data[i * IMG_WIDTH + j] = asdf[i * IMG_WIDTH + j];
+		}
+	}
 }
