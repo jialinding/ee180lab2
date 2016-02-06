@@ -86,6 +86,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
     col_begin = IMG_WIDTH/2;
     col_end = img_gray.cols-1;
   }
+	
 
   for (int i=1; i<ROWS-1; i++) {
 		// Calculate the x convolution
