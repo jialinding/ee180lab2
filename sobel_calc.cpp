@@ -279,7 +279,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
         sobel_out_final[IMG_WIDTH*(i) + j + k] = (sobel_data[k] > 255) ? 255 : sobel_data[k];
       }
 
-      vst1q_u8(sobel_out_final, img_sobel_out.data[IMG_WIDTH*(i) + j]);
+      vst1q_u8(sobel_out_final, &img_sobel_out.data[IMG_WIDTH*(i) + j]);
  //      sobel = img_outx.data[IMG_WIDTH*(i) + j] +
 	// img_outy.data[IMG_WIDTH*(i) + j];
  //      sobel = (sobel > 255) ? 255 : sobel;
