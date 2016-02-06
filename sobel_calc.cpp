@@ -16,7 +16,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	
   for (int i=0; i< (ROWS & ~3); i++) {
     for (int j=0; j< (COLS & ~3); j++) {
-      img_gray_out.data[IMG_WIDTH*i + j] = 100;
+      img_gray_out.data[j] = 100;
     }
   }
 	/*
