@@ -86,6 +86,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
     col_begin = IMG_WIDTH/2;
     col_end = img_gray.cols-1;
   }
+<<<<<<< Updated upstream
 
   // Calculate the x convolution
   for (int i=1; i<ROWS-1; i++) {
@@ -109,6 +110,9 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
     }
   }
 
+=======
+	
+>>>>>>> Stashed changes
   // Calc the y convolution
   for (int i=1; i<ROWS-1; i++) {
     for (int j=col_begin; j<col_end; j++) {
@@ -122,6 +126,21 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
      sobel = (sobel > 255) ? 255 : sobel;
 
      asdfy[IMG_WIDTH*(i) + j] = sobel;
+    }
+  }
+
+  // Calculate the x convolution
+  for (int i=1; i<ROWS-1; i++) {
+    for (int j=col_begin; j<col_end; j++) {
+      sobel = abs(img_gray.data[IMG_WIDTH*(i-1) + (j-1)] -
+			  img_gray.data[IMG_WIDTH*(i+1) + (j-1)] +
+			  2*img_gray.data[IMG_WIDTH*(i-1) + (j)] -
+			  2*img_gray.data[IMG_WIDTH*(i+1) + (j)] +
+			  img_gray.data[IMG_WIDTH*(i-1) + (j+1)] -
+			  img_gray.data[IMG_WIDTH*(i+1) + (j+1)]);
+
+      sobel = (sobel > 255) ? 255 : sobel;
+      asdfx[IMG_WIDTH*(i) + (j)] = sobel;
     }
   }
 
