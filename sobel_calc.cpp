@@ -19,8 +19,8 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 		asdf[i] = img.data[i];
 	}
 	
-    for (int i=0; i < ROWS; i++) {
-			for (int j=0; j < COLS; j++) {
+    for (int i=0; i < (ROWS & ~3); i++) {
+			for (int j=0; j < (COLS & ~3); j++) {
 	      //color = .114f*img.data[STEP0*i + STEP1*j] +
 	      //        .587f*img.data[STEP0*i + STEP1*j + 1] +
 	      //        .299f*img.data[STEP0*i + STEP1*j + 2];
@@ -29,7 +29,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 			}
     }
 		
-		for (int i = 0; i < ROWS*COLS; i++) {
+		for (int i = 0; i < ((ROWS*COLS) & ~3); i++) {
 			img_gray_out.data[i] = asdf[i];
 		}
 		//}
