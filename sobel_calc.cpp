@@ -183,52 +183,63 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
   }
 
   // Calc the y convolution
-  for (int i=1; i<img_gray.rows-1; i+=8) {
-    for (int j=col_begin; j<col_end; j++) {
+  for (int i=1; i<img_gray.rows-1; i++) {
+    for (int j=col_begin; j<col_end; j+=8) {
       sobel_out = vdupq_n_s16(0);
       int16_t img_gray_16[10];
 
       // img_gray.data[IMG_WIDTH*(i-1) + (j-1)]
       img_gray_16[0] = img_gray.data[IMG_WIDTH*(i-1) + (j-1)];
-      img_gray_16[1] = img_gray.data[IMG_WIDTH*(i-1+1) + (j-1)];
-      img_gray_16[2] = img_gray.data[IMG_WIDTH*(i-1+2) + (j-1)];
-      img_gray_16[3] = img_gray.data[IMG_WIDTH*(i-1+3) + (j-1)];
-      img_gray_16[4] = img_gray.data[IMG_WIDTH*(i-1+4) + (j-1)];
-      img_gray_16[5] = img_gray.data[IMG_WIDTH*(i-1+5) + (j-1)];
-      img_gray_16[6] = img_gray.data[IMG_WIDTH*(i-1+6) + (j-1)];
-      img_gray_16[7] = img_gray.data[IMG_WIDTH*(i-1+7) + (j-1)];
-      img_gray_16[8] = img_gray.data[IMG_WIDTH*(i-1+8) + (j-1)];
-      img_gray_16[9] = img_gray.data[IMG_WIDTH*(i-1+9) + (j-1)];
+      img_gray_16[1] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 1];
+      img_gray_16[2] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 2];
+      img_gray_16[3] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 3];
+      img_gray_16[4] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 4];
+      img_gray_16[5] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 5];
+      img_gray_16[6] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 6];
+      img_gray_16[7] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 7];
+      img_gray_16[8] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 8];
+      img_gray_16[9] = img_gray.data[IMG_WIDTH*(i-1) + (j-1) + 9];
 
       img_gray_data = vld1q_s16(&img_gray_16[0]);
-      sobel_out = vaddq_s16(sobel_out, img_gray_data);
-
-      // 2*img_gray.data[IMG_WIDTH*(i) + (j-1)]
-      img_gray_data = vld1q_s16(&img_gray_16[1]);
-      sobel_out = vmlaq_s16(sobel_out, img_gray_data, two);
-
-      // img_gray.data[IMG_WIDTH*(i) + (j-1)]
-      img_gray_data = vld1q_s16(&img_gray_16[2]);
       sobel_out = vaddq_s16(sobel_out, img_gray_data);
 
       // img_gray.data[IMG_WIDTH*(i-1) + (j+1)]
-      img_gray_16[0] = img_gray.data[IMG_WIDTH*(i-1) + (j+1)];
-      img_gray_16[1] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[2] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[3] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[4] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[5] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[6] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[7] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[8] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-      img_gray_16[9] = img_gray.data[IMG_WIDTH*(i-1+1) + (j+1)];
-
-      img_gray_data = vld1q_s16(&img_gray_16[0]);
+      img_gray_data = vld1q_s16(&img_gray_16[2]);
       sobel_out = vsubq_s16(sobel_out, img_gray_data);
+
+      // 2*img_gray.data[IMG_WIDTH*(i) + (j-1)]
+      img_gray_16[0] = img_gray.data[IMG_WIDTH*(i) + (j-1)];
+      img_gray_16[1] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 1];
+      img_gray_16[2] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 2];
+      img_gray_16[3] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 3];
+      img_gray_16[4] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 4];
+      img_gray_16[5] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 5];
+      img_gray_16[6] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 6];
+      img_gray_16[7] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 7];
+      img_gray_16[8] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 8];
+      img_gray_16[9] = img_gray.data[IMG_WIDTH*(i) + (j-1) + 9];
+
+      img_gray_data = vld1q_s16(&img_gray_16[1]);
+      sobel_out = vmlaq_s16(sobel_out, img_gray_data, two);
 
       // 2*img_gray.data[IMG_WIDTH*(i) + (j+1)]
       img_gray_data = vld1q_s16(&img_gray_16[1]);
       sobel_out = vmlsq_s16(sobel_out, img_gray_data, two);
+
+      // img_gray.data[IMG_WIDTH*(i+1) + (j-1)]
+      img_gray_16[0] = img_gray.data[IMG_WIDTH*(i+1) + (j-1)];
+      img_gray_16[1] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 1];
+      img_gray_16[2] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 2];
+      img_gray_16[3] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 3];
+      img_gray_16[4] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 4];
+      img_gray_16[5] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 5];
+      img_gray_16[6] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 6];
+      img_gray_16[7] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 7];
+      img_gray_16[8] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 8];
+      img_gray_16[9] = img_gray.data[IMG_WIDTH*(i+1) + (j-1) + 9];
+
+      img_gray_data = vld1q_s16(&img_gray_16[0]);
+      sobel_out = vaddq_s16(sobel_out, img_gray_data);
 
       // img_gray.data[IMG_WIDTH*(i+1) + (j+1)]
       img_gray_data = vld1q_s16(&img_gray_16[2]);
@@ -265,4 +276,4 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
       img_sobel_out.data[IMG_WIDTH*(i) + j] = sobel;
     }
   }
-}
+}+
