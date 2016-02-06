@@ -15,7 +15,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	const int COLS = img.cols;
 	
 	
-	unsigned char asdf[IMAGE_WIDTH*IMAGE_HEIGHT];
+	unsigned char asdf[IMG_WIDTH*IMG_HEIGHT];
 	
 	for (int i=0; i < (ROWS & ~3); i++) {
 		for (int j=0; j < (COLS & ~3); j++) {
@@ -23,11 +23,11 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 				.587f*img.data[STEP0*i + STEP1*j + 1] +
 					.299f*img.data[STEP0*i + STEP1*j + 2];
 			
-			asdf[i * IMAGE_WIDTH + j] = color;
+			asdf[i * IMG_WIDTH + j] = color;
 		}
 	}
 		
-	for (int i = 0; i < ((IMAGE_WIDTH*IMAGE_HEIGHT) & ~3); i++) {
+	for (int i = 0; i < ((IMG_WIDTH*IMG_HEIGHT) & ~3); i++) {
 		img_gray_out.data[i] = asdf[i];
 	}
 		//}
