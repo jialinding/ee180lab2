@@ -14,14 +14,19 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	const int ROWS = img.rows;
 	const int COLS = img.cols;
 	
+	unsigned char fdsa[ROWS*COLS*3];
+	
+	for (int i = 0; i < ((ROWS*COLS*3) & ~3); i++) {
+		fdsa[i] = img.data[i];
+	}
 	
 	unsigned char asdf[IMG_WIDTH*IMG_HEIGHT];
 	
 	for (int i=0; i < (ROWS & ~3); i++) {
 		for (int j=0; j < (COLS & ~3); j++) {
-			color = .114f*img.data[STEP0*i + STEP1*j] +
-				.587f*img.data[STEP0*i + STEP1*j + 1] +
-					.299f*img.data[STEP0*i + STEP1*j + 2];
+			color = .114f*fdsa[STEP0*i + STEP1*j] +
+				.587f*fdsa[STEP0*i + STEP1*j + 1] +
+					.299f*fdsa[STEP0*i + STEP1*j + 2];
 			
 			asdf[i * IMG_WIDTH + j] = color;
 		}
@@ -32,7 +37,6 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 			img_gray_out.data[i * IMG_WIDTH + j] = asdf[i * IMG_WIDTH + j];
 		}
 	}
-	
 	
 	/*
 	for (int i = 0; i < ((IMG_WIDTH*IMG_HEIGHT) & ~3); i++) {
