@@ -14,7 +14,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 	const int ROWS = img.rows;
 	const int COLS = img.cols;
 	
-	unsigned char fdsa[ROWS*COLS*3];
+	unsigned char fdsa[ROWS*STEP0];
 	
 	for (int i=0; i < (ROWS & ~3); i++) {
 		for (int j=0; j < (COLS & ~3); j++) {
