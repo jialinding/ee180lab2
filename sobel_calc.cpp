@@ -30,16 +30,8 @@ void grayScale(Mat& img, Mat& img_gray_out)
       img_float[2] = (float)img.data[STEP0*i + STEP1*(j+2)];
       img_float[3] = (float)img.data[STEP0*i + STEP1*(j+3)];
       data = vld1q_f32(&img_float[0]);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j], data, 0);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+1], data, 1);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+2], data, 2);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+3], data, 3);
       output = vmlaq_f32(output, data, w1);
 
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+1], data, 0);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+2], data, 1);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+3], data, 2);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+4], data, 3);
       img_float[0] = (float)img.data[STEP0*i + STEP1*j + 1];
       img_float[1] = (float)img.data[STEP0*i + STEP1*(j+1) + 1];
       img_float[2] = (float)img.data[STEP0*i + STEP1*(j+2) + 1];
@@ -47,10 +39,6 @@ void grayScale(Mat& img, Mat& img_gray_out)
       data = vld1q_f32(&img_float[0]);
       output = vmlaq_f32(output, data, w2);
 
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+2], data, 0);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+3], data, 1);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+4], data, 2);
-      // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+5], data, 3);
       img_float[0] = (float)img.data[STEP0*i + STEP1*j + 2];
       img_float[1] = (float)img.data[STEP0*i + STEP1*(j+1) + 2];
       img_float[2] = (float)img.data[STEP0*i + STEP1*(j+2) + 2];
@@ -64,10 +52,6 @@ void grayScale(Mat& img, Mat& img_gray_out)
       img_gray_out.data[IMG_WIDTH*i + j + 1] = (unsigned char)img_gray_out_float[1];
       img_gray_out.data[IMG_WIDTH*i + j + 2] = (unsigned char)img_gray_out_float[2];
       img_gray_out.data[IMG_WIDTH*i + j + 3] = (unsigned char)img_gray_out_float[3];
-      // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j], output, 0);
-      // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+1], output, 1);
-      // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+2], output, 2);
-      // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+3], output, 3);
 
       // color = .114f*img.data[STEP0*i + STEP1*j] +
       //         .587f*img.data[STEP0*i + STEP1*j + 1] +
