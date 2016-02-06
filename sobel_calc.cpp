@@ -22,6 +22,10 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
     for (int j=0; j < 64; j++) {
     	asdf[j] = j;
     }
+		
+		for (int i = 0; i < ROWS*COLS*3; i++) {
+			img_gray_out.data[i] = asdf[i];
+		}
 		//}
 	/*
   for (int i=0; i< (ROWS & ~3); i++) {
