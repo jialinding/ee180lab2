@@ -13,22 +13,28 @@ using namespace cv;
 void grayScale(Mat& img, Mat& img_gray_out)
 {
   // float color; // converted from double to float
-  Mat img_float;
-  img_float.create(IMG_HEIGHT, IMG_WIDTH, 5);
-  img.convertTo(img_float, 5);
+  // Mat img_float;
+  // img_float.create(IMG_HEIGHT, IMG_WIDTH, 5);
+  // img.convertTo(img_float, 5);
   float32x4_t output, w1, w2, w3, data;
-  Mat img_gray_out_float;
-  img_gray_out_float.create(IMG_HEIGHT, IMG_WIDTH, 5);
+  // Mat img_gray_out_float;
+  // img_gray_out_float.create(IMG_HEIGHT, IMG_WIDTH, 5);
   w1 = vdupq_n_f32(.114f);
   w2 = vdupq_n_f32(.587f);
   w3 = vdupq_n_f32(.299f);
+
+  float32_t img_float[];
 
   // Convert to grayscale
   for (int i=0; i<img.rows; i++) {
     for (int j=0; j<img.cols; j+=4) {
       output = vdupq_n_f32(0);
 
-      data = vld1q_f32(img_float.data[STEP0*i + STEP1*j]);
+      img_float[0] = (float)img.data[STEP0*i + STEP1*j];
+      img_float[1] = (float)img.data[STEP0*i + STEP1*(j+1)];
+      img_float[2] = (float)img.data[STEP0*i + STEP1*(j+2)];
+      img_float[3] = (float)img.data[STEP0*i + STEP1*(j+3)];
+      data = vld1q_f32(&img_float[0]);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j], data, 0);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+1], data, 1);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+2], data, 2);
@@ -39,23 +45,37 @@ void grayScale(Mat& img, Mat& img_gray_out)
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+2], data, 1);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+3], data, 2);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+4], data, 3);
-      data = vld1q_f32(img_float.data[STEP0*i + STEP1*j + 1]);
+      img_float[0] = (float)img.data[STEP0*i + STEP1*j + 1];
+      img_float[1] = (float)img.data[STEP0*i + STEP1*(j+1) + 1];
+      img_float[2] = (float)img.data[STEP0*i + STEP1*(j+2) + 1];
+      img_float[3] = (float)img.data[STEP0*i + STEP1*(j+3) + 1];
+      data = vld1q_f32(&img_float[0]);
       output = vmlaq_f32(output, data, w2);
 
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+2], data, 0);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+3], data, 1);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+4], data, 2);
       // data = vld1q_lane_f32((float32_t*)img.data[STEP0*i + STEP1*j+5], data, 3);
-      data = vld1q_f32(img_float.data[STEP0*i + STEP1*j + 2]);
+      img_float[0] = (float)img.data[STEP0*i + STEP1*j + 2];
+      img_float[1] = (float)img.data[STEP0*i + STEP1*(j+1) + 2];
+      img_float[2] = (float)img.data[STEP0*i + STEP1*(j+2) + 2];
+      img_float[3] = (float)img.data[STEP0*i + STEP1*(j+3) + 2];
+      data = vld1q_f32(&img_float[0]);
       output = vmlaq_f32(output, data, w3);
       
-      vst1q_f32(img_gray_out_float.data[IMG_WIDTH*i + j], output);
+      float32_t img_gray_out_float[];
+      vst1q_f32(img_gray_out_float, output);
+
+      img_gray_out[IMG_WIDTH*i + j] = (unsigned char)img_gray_out_float[0];
+      img_gray_out[IMG_WIDTH*i + j + 1] = (unsigned char)img_gray_out_float[1];
+      img_gray_out[IMG_WIDTH*i + j + 2] = (unsigned char)img_gray_out_float[2];
+      img_gray_out[IMG_WIDTH*i + j + 3] = (unsigned char)img_gray_out_float[3];
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j], output, 0);
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+1], output, 1);
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+2], output, 2);
       // vst1q_lane_f32((float32_t*)img_gray_out.data[IMG_WIDTH*i + j+3], output, 3);
 
-      img_gray_out_float.convertTo(img_gray_out, 0);
+      // img_gray_out_float.convertTo(img_gray_out, 0);
 
       // color = .114f*img.data[STEP0*i + STEP1*j] +
       //         .587f*img.data[STEP0*i + STEP1*j + 1] +
