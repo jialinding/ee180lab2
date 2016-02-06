@@ -12,7 +12,7 @@ void grayScale(Mat& __restrict img, Mat& __restrict img_gray_out)
 {
 	float color;
   for (int i=0; i<img.rows; i++) {
-    for (int j=0; j<img.cols; j += 4) {
+    for (int j=0; j<img.cols; j++) {
       color = .114f*img.data[STEP0*i + STEP1*j] +
               .587f*img.data[STEP0*i + STEP1*j + 1] +
               .299f*img.data[STEP0*i + STEP1*j + 2];
