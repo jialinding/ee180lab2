@@ -99,7 +99,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
 
      sobel = (sobel > 255) ? 255 : sobel;
 
-     asdfy[IMG_WIDTH*(i) + j] = sobel;
+     asdfx[IMG_WIDTH*(i) + j] = sobel;
     }
   }
 	
@@ -114,7 +114,7 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
 			  img_gray.data[IMG_WIDTH*(i+1) + (j+1)]);
 
       sobel = (sobel > 255) ? 255 : sobel;
-      asdfx[IMG_WIDTH*(i) + j] = sobel;
+      asdfy[IMG_WIDTH*(i) + j] = sobel;
     }
   }
 
