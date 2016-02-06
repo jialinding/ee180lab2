@@ -124,8 +124,8 @@ void sobelCalc(Mat& img_gray, Mat& img_sobel_out, int side)
   // Combine the two convolutions into the output image
   for (int i=1; i<img_gray.rows-1; i++) {
     for (int j=col_begin; j<col_end; j++) {
-      sobel = asdfx.data[IMG_WIDTH*(i) + j] +
-	asdfy.data[IMG_WIDTH*(i) + j];
+      sobel = asdfx[IMG_WIDTH*(i) + j] +
+	asdfy[IMG_WIDTH*(i) + j];
       sobel = (sobel > 255) ? 255 : sobel;
       asdf[IMG_WIDTH*(i) + j] = sobel;
     }
